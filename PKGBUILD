@@ -1,19 +1,19 @@
 #Maintainer: Shaumux <shaumya "at" gmail {dot} com>
 #Contributer: heaven <vo.zaeb at gmail.com>
 pkgname=vmware-modules
-pkgver=271.2
-pkgrel=1
+pkgver=10.0.1.271.2
+pkgrel=312
 pkgdesc="VMware kernel modules"
 arch=('i686' 'x86_64')
 url="http://www.vmware.com/"
 license=('GPL2')
 conflicts=('open-vm-tools-modules')
 _MINOR=$(echo ${pkgver} | cut -d . -f 2)
-depends=("vmware-player=5.0.${_MINOR}")
+#depends=("vmware-player=5.0.${_MINOR}")
 makedepends=('linux-headers')
 options=('!buildflags')
 install=${pkgname}.install
-source=('vmblock.tar' 'vmci.tar' 'vmmon.tar' 'vmnet.tar' 'vsock.tar' '271-putname.patch' '271-apic.patch' '60-vmware.rules' 'vmblock-9.0.2-5.0.2-3.10.patch' 'vmnet-9.0.2-5.0.2-3.10.patch' 'vmblock.3.11.patch')
+source=('vmblock.tar' 'vmci.tar' 'vmmon.tar' 'vmnet.tar' 'vsock.tar' '271-putname.patch' '271-apic.patch' '60-vmware.rules' 'vmblock-9.0.2-5.0.2-3.10.patch' 'vmnet-9.0.2-5.0.2-3.10.patch' 'vmblock.3.11.patch'  'vmblock-3.12-patch')
 sha256sums=('5fa33a15764f7bdfcab0f153ff7ac66c8b5d3fa1d50b6bc06a9082ada9ce69b9'
 			'a30ad6965bd0bd2d7762fb0e12e288ebc6856242b5ee9ef978caee84d6fa11b7'
 			'fa45f5ffafaaa6cce695a0862a7f3788a512fe3976ec913a161ea7eb5c9c2671'
@@ -25,17 +25,17 @@ sha256sums=('5fa33a15764f7bdfcab0f153ff7ac66c8b5d3fa1d50b6bc06a9082ada9ce69b9'
 build() {
 	_kernver=$(pacman -Q linux | cut -d . -f 2 | cut -f 1 -d -)
 	VMWARE_MODULE_LIST="vmblock vmci vmmon vmnet vsock"
-	patch -p1 < ${srcdir}/271-apic.patch
+	#patch -p1 < ${srcdir}/271-apic.patch
 	set -x
 	#patch -p1 < ${srcdir}/271-makefile-dirs.patch
 	chmod +w ${srcdir}/vmblock-only/linux/control.c
 #	[[ ${_kernver} -ge 7 ]] && patch -p1 < ${srcdir}/271-putname.patch
-	patch -p0 -i ${srcdir}/vmblock-9.0.2-5.0.2-3.10.patch
-	patch -p0 -i ${srcdir}/vmnet-9.0.2-5.0.2-3.10.patch
+	#patch -p0 -i ${srcdir}/vmblock-9.0.2-5.0.2-3.10.patch
+	#patch -p0 -i ${srcdir}/vmnet-9.0.2-5.0.2-3.10.patch
 
 	cd vmblock-only
 	pwd
-	patch -p1 -i ${srcdir}/vmblock.3.11.patch
+	patch -p1 -i ${srcdir}/vmblock-3.12-patch
 	cd ..	
 
 	for mod in ${VMWARE_MODULE_LIST}; do
