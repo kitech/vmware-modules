@@ -1,8 +1,8 @@
 #Maintainer: Shaumux <shaumya "at" gmail {dot} com>
 #Contributer: heaven <vo.zaeb at gmail.com>
 pkgname=vmware-modules
-pkgver=10.0.1.271.2
-pkgrel=312
+pkgver=10.0.1.271.3
+pkgrel=3121
 pkgdesc="VMware kernel modules"
 arch=('i686' 'x86_64')
 url="http://www.vmware.com/"
