@@ -2,7 +2,7 @@
 #Contributer: heaven <vo.zaeb at gmail.com>
 pkgname=vmware-modules
 pkgver=10.0.1.271.5
-pkgrel=3125
+pkgrel=3126
 pkgdesc="VMware kernel modules"
 arch=('i686' 'x86_64')
 url="http://www.vmware.com/"
