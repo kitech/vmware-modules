@@ -2,7 +2,7 @@
 #Contributer: heaven <vo.zaeb at gmail.com>
 pkgname=vmware-modules
 pkgver=10.0.1.271.5
-pkgrel=3128
+pkgrel=3130
 pkgdesc="VMware kernel modules"
 arch=('i686' 'x86_64')
 url="http://www.vmware.com/"
@@ -13,7 +13,7 @@ _MINOR=$(echo ${pkgver} | cut -d . -f 2)
 makedepends=('linux-headers')
 options=('!buildflags')
 install=${pkgname}.install
-source=('vmblock.tar' 'vmci.tar' 'vmmon.tar' 'vmnet.tar' 'vsock.tar' '271-putname.patch' '271-apic.patch' '60-vmware.rules' 'vmblock-9.0.2-5.0.2-3.10.patch' 'vmnet-9.0.2-5.0.2-3.10.patch' 'vmblock.3.11.patch'  'vmblock-3.12-patch')
+source=('vmblock.tar' 'vmci.tar' 'vmmon.tar' 'vmnet.tar' 'vsock.tar' '271-putname.patch' '271-apic.patch' '60-vmware.rules' 'vmblock-9.0.2-5.0.2-3.10.patch' 'vmnet-9.0.2-5.0.2-3.10.patch' 'vmblock.3.11.patch'  'vmblock-3.12-patch' 'vmnet-filter-3.13.patch')
 sha256sums=('5fa33a15764f7bdfcab0f153ff7ac66c8b5d3fa1d50b6bc06a9082ada9ce69b9'
 			'a30ad6965bd0bd2d7762fb0e12e288ebc6856242b5ee9ef978caee84d6fa11b7'
 			'fa45f5ffafaaa6cce695a0862a7f3788a512fe3976ec913a161ea7eb5c9c2671'
@@ -37,6 +37,11 @@ build() {
 	pwd
 	patch -p1 -i ${srcdir}/vmblock-3.12-patch
 	cd ..	
+
+	cd vmnet-only
+	pwd
+	patch -p1 -i ${srcdir}/vmnet-filter-3.13.patch
+	cd ..
 
 	for mod in ${VMWARE_MODULE_LIST}; do
 		cd ${srcdir}/${mod}-only
