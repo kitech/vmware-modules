@@ -38,6 +38,14 @@ typedef u64 inode_num_t;
 typedef ino_t inode_num_t;
 #endif
 
+/* Specifically for our filldir_t callback */
+typedef struct FilldirInfo {
+   filldir_t filldir;
+   void *dirent;
+} FilldirInfo;
+
+
+
 /* File operations */
 
 /*
@@ -129,7 +137,6 @@ FileOpReaddir(struct file *file,  // IN
               struct dir_context *ctx)  // IN
 {
    int ret;
-
    struct file *actualFile;
 
    if (!file) {

@@ -135,7 +135,8 @@ InodeOpLookup(struct inode *dir,      // IN: parent directory's inode
    inode->i_size = INODE_TO_IINFO(inode)->nameLen;
    inode->i_version = 1;
    inode->i_atime = inode->i_mtime = inode->i_ctime = CURRENT_TIME;
-   inode->i_uid = inode->i_gid = 0;
+   inode->i_uid = GLOBAL_ROOT_UID;
+   inode->i_gid = GLOBAL_ROOT_GID;
    inode->i_op = &LinkInodeOps;
 
    d_add(dentry, inode);
@@ -221,7 +222,7 @@ InodeOpFollowlink(struct dentry *dentry,  // IN : dentry of symlink
       goto out;
    }
 
-   ret = vfs_follow_link(nd, iinfo->name);
+   nd_set_link(nd, iinfo->name);
 
 out:
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 13)

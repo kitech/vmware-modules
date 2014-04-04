@@ -208,17 +208,20 @@ SetupProcDevice(void)
    VMBlockSetProcEntryOwner(controlProcMountpoint);
 
    /* Create /proc/fs/vmblock/dev */
-   controlProcEntry = create_proc_entry(VMBLOCK_CONTROL_DEVNAME,
+   /* controlProcEntry = create_proc_entry(VMBLOCK_CONTROL_DEVNAME,
                                         VMBLOCK_CONTROL_MODE,
                                         controlProcDirEntry);
-   if (!controlProcEntry) {
+                                        if (!controlProcEntry) {*/
+   controlProcEntry = proc_create(VMBLOCK_CONTROL_DEVNAME, VMBLOCK_CONTROL_MODE, controlProcDirEntry, &ControlFileOps);
+   if (controlProcEntry == NULL) {
+
       Warning("SetupProcDevice: could not create " VMBLOCK_DEVICE "\n");
       remove_proc_entry(VMBLOCK_CONTROL_MOUNTPOINT, controlProcDirEntry);
       remove_proc_entry(VMBLOCK_CONTROL_PROC_DIRNAME, NULL);
       return -EINVAL;
    }
 
-   controlProcEntry->proc_fops = &ControlFileOps;
+   /*controlProcEntry->proc_fops = &ControlFileOps;*/
    return 0;
 }
 
@@ -293,7 +296,7 @@ ExecuteBlockOp(const char __user *buf,                // IN: buffer with name
 
    retval = i < 0 ? -EINVAL : blockOp(name, blocker);
 
-   putname(name);
+   __putname(name);
 
    return retval;
 }

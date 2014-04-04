@@ -2,7 +2,7 @@
 #Contributer: heaven <vo.zaeb at gmail.com>
 pkgname=vmware-modules
 pkgver=10.0.1.271.5
-pkgrel=3130
+pkgrel=3140
 pkgdesc="VMware kernel modules"
 arch=('i686' 'x86_64')
 url="http://www.vmware.com/"
@@ -33,14 +33,16 @@ build() {
 	#patch -p0 -i ${srcdir}/vmblock-9.0.2-5.0.2-3.10.patch
 	#patch -p0 -i ${srcdir}/vmnet-9.0.2-5.0.2-3.10.patch
 
+#        patch -p0 -i ${srcdir}/279-linux-3.14.patch
+
 	cd vmblock-only
 	pwd
-	patch -p1 -i ${srcdir}/vmblock-3.12-patch
+	#patch -p1 -i ${srcdir}/vmblock-3.12-patch
 	cd ..	
 
 	cd vmnet-only
 	pwd
-	patch -p1 -i ${srcdir}/vmnet-filter-3.13.patch
+	#patch -p1 -i ${srcdir}/vmnet-filter-3.13.patch
 	cd ..
 
 	for mod in ${VMWARE_MODULE_LIST}; do

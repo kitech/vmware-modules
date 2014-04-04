@@ -63,4 +63,22 @@ ExponentialAvg(uint32 avg, uint32 value, uint32 gainNumer, uint32 gainDenom)
    return (term1 + term2) / gainDenom;
 }
 
+static INLINE Bool
+IsPowerOfTwo(uint32 x)
+{
+   /* Does not check for zero. Callers depend on this. */
+   return !(x & (x - 1));
+}
+
+static INLINE uint32
+GetPowerOfTwo(uint32 x)
+{
+   /* Returns next-greatest power-of-two. */
+   uint32 power2 = 1;
+   while (x > power2) {
+      power2 = power2 << 1;
+   }
+   return power2;
+}
+
 #endif // ifndef _VM_BASIC_MATH_H_
